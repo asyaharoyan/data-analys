@@ -12,8 +12,20 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('data-analys')
 
-delivery = SHEET.worksheet('delivery')
+def add_data():
+    """
+    Ask the user to add the data in the terminal
+    """
+    print('Please answer the questions.')
 
-data = delivery.get_all_values()
+    your_gender = input("Your gender: \n")
+    your_age = input("Your age: \n")
+    delivery_sat = input("How satisfied are you from our delivery? (1 - 5): \n")
+    missing_goods = input("Were any missing/damaged goods?: \n")
+    contact_method = input("Did you contact to our customer service or did you complain through our website?: \n")
+    service_sat = input("How satisfied are you from our customer service/online services? (1 - 5): \n")
 
-print(data)
+    print(f"The data you provided is: {your_gender}, {your_age}, {delivery_sat}, {missing_goods}, {contact_method}, {service_sat}\n")
+
+add_data()
+
