@@ -26,15 +26,18 @@ def add_data():
     "Did you contact to our customer service or did you complain through our website?(CS/W): ",
     "How satisfied are you from our customer service/online services? (1 - 5): ",
     ]
+    while True:
+        print('Please answer the questions.')
 
-    print('Please answer the questions.')
-
-    for question in questions:
-        answer = input(question)
+        for question in questions:
+            answer = input(question)
+            
+            user_input.append(answer)
+            
+        if validate_data(user_input):
+            print(f'The data has been validated.')
+            break
         
-        user_input.append(answer)
-        
-    validate_data(user_input)
 
 
 def validate_data(values):
@@ -42,17 +45,23 @@ def validate_data(values):
     Validates the data provided by the user. 
     """
     try:
-        if (values[0].upper() not in ['W', 'M', 'NONE'] 
+        int(values[2])
+        int(values[5])
+        values[0].upper()
+        values[3].upper()
+        values[4].upper()
+        if (values[0] not in ['W', 'M', 'NONE'] 
         and not values[1].isdigit()
-        and not 1 >= int(values[2]) <= 5 
-        and values[3].upper() not in ['Y', 'N']
-        and values[4].upper() not in ['CS', 'W'] 
-        and not 1 >= int(values[5]) <= 5):
+        and not (1 >= values[2] <= 5) 
+        and values[3] not in ['Y', 'N']
+        and values[4] not in ['CS', 'W'] 
+        and not (1 >= values[5] <= 5)):
             print('Invalid input.')
-        else:
-            print('The data has been validated.\n')
+        
     except ValueError as e:
         print(f'Invalid data {e}, please try again.\n') 
+        return False
+    return True
 
 add_data()
 
