@@ -23,8 +23,8 @@ def add_data():
     "Your age: ",
     "How satisfied are you from our delivery? (1 - 5): ",
     "Were any missing/damaged goods?(Y/N): ",
-    "Did you contact to our customer service or did you complain through our website?(CS/W): ",
-    "How satisfied are you from our customer service/online services? (1 - 5): ",
+    "Did you contact to our customer service or did you complain through our website?(CS/W/NA): ",
+    "How satisfied are you from our services? (1 - 5): ",
     ]
     while True:
         print('Please answer the questions.')
@@ -38,6 +38,8 @@ def add_data():
             print(f'The data has been validated.')
             break
         
+    return user_input
+    
 
 
 def validate_data(values):
@@ -50,12 +52,12 @@ def validate_data(values):
         values[0].upper()
         values[3].upper()
         values[4].upper()
-        if (values[0] not in ['W', 'M', 'NONE'] 
+        if (values[0] not in ['W', 'M', 'NONE']
         and not values[1].isdigit()
         and not (1 >= values[2] <= 5) 
         and values[3] not in ['Y', 'N']
-        and values[4] not in ['CS', 'W'] 
-        and not (1 >= values[5] <= 5)):
+        and values[4] not in ['CS', 'W', 'NA'] 
+        and not (1 >= values[5] <= 5) or values == ''):
             print('Invalid input.')
         
     except ValueError as e:
@@ -63,5 +65,20 @@ def validate_data(values):
         return False
     return True
 
-add_data()
+
+
+def update_analyse_data(user_data):
+    """
+    Updates the anayse sheet when the user input is validated
+    """
+    print('Updating the data... \n')
+    data_analyse_worksheet = SHEET.worksheet('delivery')
+    print(user_answers)
+    data_analyse_worksheet.append_row(user_data)
+    print('The worksheet has been updates successfully...\n')
+
+
+
+user_answers = add_data()
+update_analyse_data(user_answers)
 
